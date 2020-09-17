@@ -20,47 +20,50 @@ using namespace std;
 //   -- Dividing by zero returns zero
 
 class Rational {
+  // overloaded >>: 
+  // prints whole numbers without Denominator (as ints), otherwise uses '/'
+  friend ostream &operator<<(ostream &output, const Rational &r);
 
-// overloaded <<: prints "DIVIDE BY ZERO ERROR!!!" if Denominator is zero,
-//    prints whole numbers without Denominator (as ints), otherwise uses '/'
-  friend ostream &operator<<(ostream &Output, const Rational &R);
+  // overloaded >>: takes 2 ints as Numerator and Denominator
+  friend istream &operator>>(istream &input, Rational &r);
 
-// overloaded >>: takes 2 ints as Numerator and Denominator, does no
-//    error checking, standard C casting between floats, char, etc occurs
-  friend istream &operator>>(istream &input, Rational &R);
-
- public:
-  // conversion function
+public:
+  // explicit conversion function
   explicit operator int() const;
-  // default constructor:  parameters are Numerator and Denominator resp.
-  explicit Rational(int N = 0, int D = 1);
+    // default constructor using member values
+  Rational();
+  // constructor with just numerator
+  explicit Rational(int numerator);
+  // default constructor with numerator and denomintor
+  Rational(int numerator, int denominator);
 
   // arithmetic operators
-  Rational operator+(const Rational &A) const;   // add 2 Rationals
-  Rational operator-(const Rational &S) const;   // subtract 2 Rationals
-  Rational operator*(const Rational &M) const;   // multiply 2 Rationals
-  Rational operator/(const Rational &V) const;   // divide 2 Rationals
-  // division by zero terminates
+  Rational operator+(const Rational &other) const;
+  Rational operator-(const Rational &other) const;
+  Rational operator*(const Rational &other) const;
+  Rational operator/(const Rational &other) const;
 
   // boolean comparison operators
-  bool operator>(const Rational &R) const;       // is object > parameter?
-  bool operator<(const Rational &R) const;       // is object < parameter?
-  bool operator>=(const Rational &R) const;      // is object >= parameter?
-  bool operator<=(const Rational &R) const;      // is object >= parameter?
-  bool operator==(const Rational &R) const;      // is object == parameter?
-  bool operator!=(const Rational &R) const;      // is object != parameter?
+  bool operator>(const Rational &r) const;
+  bool operator<(const Rational &r) const;
+  bool operator>=(const Rational &r) const;
+  bool operator<=(const Rational &r) const;
+  bool operator==(const Rational &r) const;
+  bool operator!=(const Rational &r) const;
 
   // assignment operators
-  Rational &operator+=(const Rational &A);       // current object += parameter
-// Rational& operator-=(const Rational &);       // current object -= parameter
-// Rational& operator*=(const Rational &);       // current object *= parameter
-// Rational& operator/=(const Rational &);       // current object /= parameter
-  // division by zero terminates
+  Rational &operator+=(const Rational &other);
+  Rational& operator-=(const Rational &other);
+  Rational& operator*=(const Rational &other);
+  Rational& operator/=(const Rational &other);
 
- private:
-  int Numerator;                       // Numerator of fraction
-  int Denominator;                     // Denominator of fraction
-  void reduce();                       // reduce fraction to lowest terms
+private:
+  // Numerator of fraction
+  int numerator = 0;
+  // Denominator of fraction
+  int denominator = 1;
+  // reduce fraction to lowest terms
+  void reduce();
 };
 
 #endif

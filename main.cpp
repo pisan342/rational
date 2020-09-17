@@ -1,16 +1,102 @@
+#include <cassert>
 #include <iostream>
+#include <sstream>
 
 #include "rational.h"
 
+using namespace std;
+
+// testing comparison
+void test1() {
+  Rational r12(1, 2);
+  Rational r23(2, 3);
+  assert(r23 > r12);
+  assert(r23 >= r12);
+  assert(r12 < r23);
+  assert(r12 <= r23);
+  assert(r12 != r23);
+  Rational r48(4, 8);
+  assert(r12 == r48);
+}
+
+// testing arithmetic
+void test2() {
+  stringstream ss;
+  Rational r12(1, 2);
+  Rational r23(2, 3);
+  ss << r12 + r23;
+  assert(ss.str() == "7/6");
+
+  ss.str("");
+  ss << r12 - r23;
+  assert(ss.str() == "-1/6");
+
+  ss.str("");
+  ss << r12 * r23;
+  assert(ss.str() == "1/3");
+
+  ss.str("");
+  ss << r12 / r23;
+  assert(ss.str() == "3/4");
+}
+
+// testing assignment operators
+void test3() {
+  stringstream ss;
+  Rational r12(1, 2);
+  Rational r23(2, 3);
+  r12 += r23;
+  ss << r12;
+  assert(ss.str() == "7/6");
+
+  ss.str("");
+  r12 = Rational(1, 2);
+  r12 -= r23;
+  ss << r12;
+  assert(ss.str() == "-1/6");
+
+  ss.str("");
+  r12 = Rational(1, 2);
+  r12 *= r23;
+  ss << r12;
+  assert(ss.str() == "1/3");
+
+  ss.str("");
+  r12 = Rational(1, 2);
+  r12 /= r23;
+  ss << r12;
+  assert(ss.str() == "3/4");
+}
+
+// test miscellaneous
+void test4() {
+  stringstream ss;
+  Rational r(-1, -2);
+  ss << r;
+  assert(ss.str() == "1/2");
+
+  ss.str("");
+  istringstream toRead("-20 -70");
+  toRead >> r;
+  ss << r;
+  assert(ss.str() == "2/7");
+
+  ss.str("");
+  Rational r10(10);
+  r *= r10;
+  ss << r;
+  assert(ss.str() == "20/7");
+}
+
 int main() {
-  Rational R1(1, 16);
-  //Rational R2(1, 8);
-  //Rational r4;
-  Rational R2;
-  Rational R5 = Rational(5) + R1;
-  //r4 = R1 + (R1 += R2);
-  cout << "R5: " << R5 << endl;
-  //cout << r4 << endl;
-  std::cout << "Hello, World!" << std::endl;
+  test1();
+  test2();
+  test3();
+  test4();
+  // Rational r1(1, 16);
+  // Rational r2(4);
+  // Rational r3 = r1 + r2;
+  // cout << "r3: " << r3 << endl;
+  cout << "Done." << endl;
   return 0;
 }
