@@ -86,6 +86,25 @@ void test4() {
   r *= r10;
   ss << r;
   assert(ss.str() == "20/7");
+
+  // same as old style casting using (int)
+  int num = static_cast<int>(r);
+  assert(num == 2);
+
+  ss.str("");
+  Rational bad(4, 0);
+  ss << bad;
+  assert(ss.str() == "DIVIDE BY ZERO ERROR!!!");
+
+  ss.str("");
+  Rational whole(7, 1);
+  ss << whole;
+  assert(ss.str() == "7");
+
+  ss.str("");
+  Rational zero(0, 10);
+  ss << zero;
+  assert(ss.str() == "0");
 }
 
 int main() {

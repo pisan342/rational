@@ -1,0 +1,398 @@
+Thu Sep 17 14:29:02 PDT 2020
+Linux csslab1.uwb.edu 3.10.0-1127.19.1.el7.x86_64 #1 SMP Tue Aug 25 17:23:54 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+uid=870540(pisan) gid=2120870540(pisan) groups=2120870540(pisan),579804(faculty)
+=====================================================
+1. Compiles without warnings with -Wall -Wextra flags
+=====================================================
+=====================================================
+2. Runs and produces correct output
+=====================================================
+Done.
+=====================================================
+3. clang-tidy warnings are fixed
+=====================================================
+11351 warnings generated.
+22235 warnings generated.
+Suppressed 22235 warnings (22235 in non-user code).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
+=====================================================
+4. clang-format does not find any formatting issues
+=====================================================
+Running clang-format on ./main.cpp
+Running clang-format on ./rational.cpp
+=====================================================
+5. No memory leaks using g++
+=====================================================
+=====================================================
+6. No memory leaks using valgrind, look for "definitely lost" 
+=====================================================
+==29155== Memcheck, a memory error detector
+==29155== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==29155== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==29155== Command: ./a.out
+==29155== Parent PID: 29103
+==29155== 
+==29155== 
+==29155== HEAP SUMMARY:
+==29155==     in use at exit: 0 bytes in 0 blocks
+==29155==   total heap usage: 3 allocs, 3 frees, 73,248 bytes allocated
+==29155== 
+==29155== All heap blocks were freed -- no leaks are possible
+==29155== 
+==29155== For lists of detected and suppressed errors, rerun with: -s
+==29155== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+=====================================================
+7. Tests have full code coverage
+=====================================================
+File '/home/NETID/pisan/bitbucket/pisan342/rational/main.cpp':
+Name                        Regions    Miss   Cover     Lines    Miss   Cover
+-----------------------------------------------------------------------------
+test1()                           1       0 100.00%        11       0 100.00%
+test2()                           1       0 100.00%        19       0 100.00%
+test3()                           1       0 100.00%        26       0 100.00%
+test4()                           1       0 100.00%        37       0 100.00%
+main                              1       0 100.00%        12       0 100.00%
+-----------------------------------------------------------------------------
+TOTAL                             5       0 100.00%       105       0 100.00%
+
+File '/home/NETID/pisan/bitbucket/pisan342/rational/rational.cpp':
+Name                                          Regions    Miss   Cover     Lines    Miss   Cover
+-----------------------------------------------------------------------------------------------
+Rational::Rational()                                1       0 100.00%         1       0 100.00%
+Rational::Rational(int)                             1       0 100.00%         1       0 100.00%
+Rational::Rational(int, int)                        3       0 100.00%         9       0 100.00%
+Rational::operator int() const                      1       0 100.00%         1       0 100.00%
+Rational::operator+(Rational const&) const          1       0 100.00%         6       0 100.00%
+Rational::operator-(Rational const&) const          1       0 100.00%         6       0 100.00%
+Rational::operator*(Rational const&) const          1       0 100.00%         6       0 100.00%
+Rational::operator/(Rational const&) const          3       0 100.00%        10       0 100.00%
+Rational::operator>(Rational const&) const          1       0 100.00%         3       0 100.00%
+Rational::operator<(Rational const&) const          1       0 100.00%         3       0 100.00%
+Rational::operator>=(Rational const&) const         3       0 100.00%         3       0 100.00%
+Rational::operator<=(Rational const&) const         3       0 100.00%         3       0 100.00%
+Rational::operator==(Rational const&) const         3       0 100.00%         3       0 100.00%
+Rational::operator!=(Rational const&) const         1       0 100.00%         3       0 100.00%
+Rational::operator+=(Rational const&)               1       0 100.00%         6       0 100.00%
+Rational::operator-=(Rational const&)               1       0 100.00%         6       0 100.00%
+Rational::operator*=(Rational const&)               1       0 100.00%         6       0 100.00%
+Rational::operator/=(Rational const&)               1       0 100.00%         6       0 100.00%
+operator<<(std::ostream&, Rational const&)         10       0 100.00%        13       0 100.00%
+operator>>(std::istream&, Rational&)                3       0 100.00%         9       0 100.00%
+Rational::reduce()                                 12       0 100.00%        20       0 100.00%
+-----------------------------------------------------------------------------------------------
+TOTAL                                              53       0 100.00%       124       0 100.00%
+/home/NETID/pisan/bitbucket/pisan342/rational/main.cpp:
+    1|       |#include <cassert>
+    2|       |#include <iostream>
+    3|       |#include <sstream>
+    4|       |
+    5|       |#include "rational.h"
+    6|       |
+    7|       |using namespace std;
+    8|       |
+    9|       |// testing comparison
+   10|      1|void test1() {
+   11|      1|  Rational r12(1, 2);
+   12|      1|  Rational r23(2, 3);
+   13|      1|  assert(r23 > r12);
+   14|      1|  assert(r23 >= r12);
+   15|      1|  assert(r12 < r23);
+   16|      1|  assert(r12 <= r23);
+   17|      1|  assert(r12 != r23);
+   18|      1|  Rational r48(4, 8);
+   19|      1|  assert(r12 == r48);
+   20|      1|}
+   21|       |
+   22|       |// testing arithmetic
+   23|      1|void test2() {
+   24|      1|  stringstream ss;
+   25|      1|  Rational r12(1, 2);
+   26|      1|  Rational r23(2, 3);
+   27|      1|  ss << r12 + r23;
+   28|      1|  assert(ss.str() == "7/6");
+   29|      1|
+   30|      1|  ss.str("");
+   31|      1|  ss << r12 - r23;
+   32|      1|  assert(ss.str() == "-1/6");
+   33|      1|
+   34|      1|  ss.str("");
+   35|      1|  ss << r12 * r23;
+   36|      1|  assert(ss.str() == "1/3");
+   37|      1|
+   38|      1|  ss.str("");
+   39|      1|  ss << r12 / r23;
+   40|      1|  assert(ss.str() == "3/4");
+   41|      1|}
+   42|       |
+   43|       |// testing assignment operators
+   44|      1|void test3() {
+   45|      1|  stringstream ss;
+   46|      1|  Rational r12(1, 2);
+   47|      1|  Rational r23(2, 3);
+   48|      1|  r12 += r23;
+   49|      1|  ss << r12;
+   50|      1|  assert(ss.str() == "7/6");
+   51|      1|
+   52|      1|  ss.str("");
+   53|      1|  r12 = Rational(1, 2);
+   54|      1|  r12 -= r23;
+   55|      1|  ss << r12;
+   56|      1|  assert(ss.str() == "-1/6");
+   57|      1|
+   58|      1|  ss.str("");
+   59|      1|  r12 = Rational(1, 2);
+   60|      1|  r12 *= r23;
+   61|      1|  ss << r12;
+   62|      1|  assert(ss.str() == "1/3");
+   63|      1|
+   64|      1|  ss.str("");
+   65|      1|  r12 = Rational(1, 2);
+   66|      1|  r12 /= r23;
+   67|      1|  ss << r12;
+   68|      1|  assert(ss.str() == "3/4");
+   69|      1|}
+   70|       |
+   71|       |// test miscellaneous
+   72|      1|void test4() {
+   73|      1|  stringstream ss;
+   74|      1|  Rational r(-1, -2);
+   75|      1|  ss << r;
+   76|      1|  assert(ss.str() == "1/2");
+   77|      1|
+   78|      1|  ss.str("");
+   79|      1|  istringstream toRead("-20 -70");
+   80|      1|  toRead >> r;
+   81|      1|  ss << r;
+   82|      1|  assert(ss.str() == "2/7");
+   83|      1|
+   84|      1|  ss.str("");
+   85|      1|  Rational r10(10);
+   86|      1|  r *= r10;
+   87|      1|  ss << r;
+   88|      1|  assert(ss.str() == "20/7");
+   89|      1|
+   90|      1|  // same as old style casting using (int)
+   91|      1|  int num = static_cast<int>(r);
+   92|      1|  assert(num == 2);
+   93|      1|
+   94|      1|  ss.str("");
+   95|      1|  Rational bad(4, 0);
+   96|      1|  ss << bad;
+   97|      1|  assert(ss.str() == "DIVIDE BY ZERO ERROR!!!");
+   98|      1|
+   99|      1|  ss.str("");
+  100|      1|  Rational whole(7, 1);
+  101|      1|  ss << whole;
+  102|      1|  assert(ss.str() == "7");
+  103|      1|
+  104|      1|  ss.str("");
+  105|      1|  Rational zero(0, 10);
+  106|      1|  ss << zero;
+  107|      1|  assert(ss.str() == "0");
+  108|      1|}
+  109|       |
+  110|      1|int main() {
+  111|      1|  test1();
+  112|      1|  test2();
+  113|      1|  test3();
+  114|      1|  test4();
+  115|      1|  // Rational r1(1, 16);
+  116|      1|  // Rational r2(4);
+  117|      1|  // Rational r3 = r1 + r2;
+  118|      1|  // cout << "r3: " << r3 << endl;
+  119|      1|  cout << "Done." << endl;
+  120|      1|  return 0;
+  121|      1|}
+
+/home/NETID/pisan/bitbucket/pisan342/rational/rational.cpp:
+    1|       |// a Rational object holds one Rational number, one fraction
+    2|       |// Example from Deitel and Deitel: C++ How To Program
+    3|       |
+    4|       |#include "rational.h"
+    5|       |
+    6|       |// default constructor using member values
+    7|      1|Rational::Rational() = default;
+    8|       |
+    9|       |// constructor with numberator only, denominator defaults to 1
+   10|      1|Rational::Rational(int numerator) : numerator{numerator} {}
+   11|       |
+   12|       |// constructor with numberator and denominator
+   13|       |Rational::Rational(int aNumerator, int aDenominator)
+   14|     17|    : numerator{aNumerator}, denominator{aDenominator} {
+   15|     17|  // If denominator is negative, flip both
+   16|     17|  if (aDenominator < 0) {
+   17|      1|    numerator = -aNumerator;
+   18|      1|    denominator = -aDenominator;
+   19|      1|  }
+   20|     17|  // to lowest terms
+   21|     17|  reduce();
+   22|     17|}
+   23|       |
+   24|      1|Rational::operator int() const { return numerator / denominator; }
+   25|       |//----------------------------------------------------------------------------
+   26|       |// operator+
+   27|       |// overloaded +: addition of 2 Rationals, current object and parameter
+   28|       |// Result is reduced to lowest terms.
+   29|       |
+   30|      1|Rational Rational::operator+(const Rational &other) const {
+   31|      1|  int n = other.numerator * denominator + other.denominator * numerator;
+   32|      1|  int d = other.denominator * denominator;
+   33|      1|  Rational result(n, d);
+   34|      1|  return result;
+   35|      1|}
+   36|       |
+   37|       |//----------------------------------------------------------------------------
+   38|       |// operator-
+   39|       |// overloaded -: subtraction of 2 Rationals, current object and parameter
+   40|       |// Result is reduced to lowest terms.
+   41|       |
+   42|      1|Rational Rational::operator-(const Rational &other) const {
+   43|      1|  int n = other.denominator * numerator - denominator * other.numerator;
+   44|      1|  int d = other.denominator * denominator;
+   45|      1|  Rational result(n, d);
+   46|      1|  return result;
+   47|      1|}
+   48|       |
+   49|       |// overloaded *: multiplication of 2 Rationals, current object and parameter
+   50|      1|Rational Rational::operator*(const Rational &other) const {
+   51|      1|  int n = other.numerator * numerator;
+   52|      1|  int d = other.denominator * denominator;
+   53|      1|  Rational result(n, d);
+   54|      1|  return result;
+   55|      1|}
+   56|       |
+   57|       |// overloaded /: division of 2 Rationals
+   58|      1|Rational Rational::operator/(const Rational &other) const {
+   59|      1|  Rational div;
+   60|      1|  // make sure new denominator is not zero
+   61|      1|  if (other.numerator != 0) {
+   62|      1|    div.numerator = other.denominator * numerator;
+   63|      1|    div.denominator = denominator * other.numerator;
+   64|      1|    div.reduce();
+   65|      1|  }
+   66|      1|  return div;
+   67|      1|}
+   68|       |
+   69|       |// overloaded >: true if current object is > parameter, otherwise false
+   70|      2|bool Rational::operator>(const Rational &other) const {
+   71|      2|  return numerator * other.denominator > other.numerator * denominator;
+   72|      2|}
+   73|       |
+   74|       |// overloaded <: true if current object is < parameter, otherwise false
+   75|      2|bool Rational::operator<(const Rational &other) const {
+   76|      2|  return numerator * other.denominator < other.numerator * denominator;
+   77|      2|}
+   78|       |
+   79|       |// overloaded >=: true if current object is >= parameter, otherwise false
+   80|      1|bool Rational::operator>=(const Rational &other) const {
+   81|      1|  return *this == other || *this > other;
+   82|      1|}
+   83|       |
+   84|       |// overloaded <=: true if current object is <= parameter, otherwise false
+   85|      1|bool Rational::operator<=(const Rational &other) const {
+   86|      1|  return *this == other || *this < other;
+   87|      1|}
+   88|       |
+   89|       |// overloaded ==: true if current object is == parameter, otherwise false
+   90|      4|bool Rational::operator==(const Rational &other) const {
+   91|      4|  return numerator == other.numerator && denominator == other.denominator;
+   92|      4|}
+   93|       |
+   94|       |// overloaded !=: true if current object is != parameter, otherwise false
+   95|      1|bool Rational::operator!=(const Rational &other) const {
+   96|      1|  return !(*this == other);
+   97|      1|}
+   98|       |
+   99|       |// overloaded +=: current object = current object + parameter
+  100|      1|Rational &Rational::operator+=(const Rational &other) {
+  101|      1|  numerator = other.numerator * denominator + other.denominator * numerator;
+  102|      1|  denominator *= other.denominator;
+  103|      1|  reduce();
+  104|      1|  return *this;
+  105|      1|}
+  106|       |
+  107|       |// overloaded -=: current object = current object - parameter
+  108|      1|Rational &Rational::operator-=(const Rational &other) {
+  109|      1|  numerator = numerator * other.denominator - other.numerator * denominator;
+  110|      1|  denominator *= other.denominator;
+  111|      1|  reduce();
+  112|      1|  return *this;
+  113|      1|}
+  114|       |
+  115|       |// overloaded *=: current object = current object * parameter
+  116|      2|Rational &Rational::operator*=(const Rational &other) {
+  117|      2|  numerator *= other.numerator;
+  118|      2|  denominator *= other.denominator;
+  119|      2|  reduce();
+  120|      2|  return *this;
+  121|      2|}
+  122|       |
+  123|       |// overloaded /=: current object = current object / parameter
+  124|      1|Rational &Rational::operator/=(const Rational &other) {
+  125|      1|  numerator *= other.denominator;
+  126|      1|  denominator *= other.numerator;
+  127|      1|  reduce();
+  128|      1|  return *this;
+  129|      1|}
+  130|       |
+  131|       |//----------------------------------------------------------------------------
+  132|       |// operator<<
+  133|       |// overloaded <<: prints "DIVIDE BY ZERO ERROR!!!" if Denominator is zero,
+  134|       |//    prints whole numbers without Denominator (as ints), otherwise uses '/'
+  135|     14|ostream &operator<<(ostream &output, const Rational &r) {
+  136|     14|  if (r.denominator == 0) {
+  137|      1|    return output << "DIVIDE BY ZERO ERROR!!!";
+  138|      1|  }
+  139|     13|  if (r.numerator == 0) {
+  140|      1|    return output << 0;
+  141|      1|  }
+  142|     12|  if (r.denominator == 1) {
+  143|      1|    // whole number
+  144|      1|    return output << r.numerator;
+  145|      1|  }
+  146|     11|  return output << r.numerator << "/" << r.denominator;
+  147|     11|}
+  148|       |
+  149|       |//----------------------------------------------------------------------------
+  150|       |// operator>>
+  151|       |// overloaded >>: takes 2 ints as Numerator and Denominator, does no
+  152|       |//    error checking, standard C casting between floats, char, etc occurs
+  153|       |
+  154|      1|istream &operator>>(istream &input, Rational &r) {
+  155|      1|  input >> r.numerator >> r.denominator;
+  156|      1|  if (r.denominator < 0) {
+  157|      1|    r.numerator = -r.numerator;
+  158|      1|    r.denominator = -r.denominator;
+  159|      1|  }
+  160|      1|  r.reduce();
+  161|      1|  return input;
+  162|      1|}
+  163|       |
+  164|       |// reduce fraction to lowest terms
+  165|     24|void Rational::reduce() {
+  166|     24|  // make Numerator positive
+  167|     24|  int n = numerator < 0 ? -numerator : numerator;
+  168|     24|
+  169|     24|  int greatestCommonCivisor = 0;
+  170|     24|
+  171|     24|  // find Largest value that divides both Numerator and Denominator evenly
+  172|    162|  for (int loop = max(n, denominator); loop > 1; loop--) {
+  173|    144|    if (numerator % loop == 0 && denominator % loop == 0) {
+  174|      6|      greatestCommonCivisor = loop;
+  175|      6|      break;
+  176|      6|    }
+  177|    144|  }
+  178|     24|
+  179|     24|  // alter Numerator, Denominator if originally not reduced to lowest terms
+  180|     24|  if (greatestCommonCivisor != 0) {
+  181|      6|    numerator /= greatestCommonCivisor;
+  182|      6|    denominator /= greatestCommonCivisor;
+  183|      6|  }
+  184|     24|}
+
+Thu Sep 17 14:29:11 PDT 2020
+=====================================================
+To create an output.txt file with all the output from this script
+Run the below command
+      ./create-output.sh > output.txt 2>&1 
+=====================================================

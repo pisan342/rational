@@ -20,7 +20,7 @@ using namespace std;
 //   -- Dividing by zero returns zero
 
 class Rational {
-  // overloaded >>: 
+  // overloaded >>:
   // prints whole numbers without Denominator (as ints), otherwise uses '/'
   friend ostream &operator<<(ostream &output, const Rational &r);
 
@@ -30,7 +30,7 @@ class Rational {
 public:
   // explicit conversion function
   explicit operator int() const;
-    // default constructor using member values
+  // default constructor using member values
   Rational();
   // constructor with just numerator
   explicit Rational(int numerator);
@@ -53,9 +53,9 @@ public:
 
   // assignment operators
   Rational &operator+=(const Rational &other);
-  Rational& operator-=(const Rational &other);
-  Rational& operator*=(const Rational &other);
-  Rational& operator/=(const Rational &other);
+  Rational &operator-=(const Rational &other);
+  Rational &operator*=(const Rational &other);
+  Rational &operator/=(const Rational &other);
 
 private:
   // Numerator of fraction
