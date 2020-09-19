@@ -1,0 +1,19 @@
+name: Basic compile, code checks, and test run
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v2
+
+    - name: Run create-output.sh file
+      run: chmod 755 create-output.sh; ./create-output.sh
