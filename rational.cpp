@@ -2,6 +2,7 @@
 // Example from Deitel and Deitel: C++ How To Program
 
 #include "rational.h"
+#include <cassert>
 
 // default constructor using member values
 Rational::Rational() = default;
@@ -12,6 +13,7 @@ Rational::Rational(int numerator) : numerator{numerator} {}
 // constructor with numberator and denominator
 Rational::Rational(int aNumerator, int aDenominator)
     : numerator{aNumerator}, denominator{aDenominator} {
+  assert(denominator != 0);
   // If denominator is negative, flip both
   if (aDenominator < 0) {
     numerator = -aNumerator;
@@ -133,9 +135,7 @@ Rational &Rational::operator/=(const Rational &other) {
 // overloaded <<: prints "DIVIDE BY ZERO ERROR!!!" if Denominator is zero,
 //    prints whole numbers without Denominator (as ints), otherwise uses '/'
 ostream &operator<<(ostream &output, const Rational &r) {
-  if (r.denominator == 0) {
-    return output << "DIVIDE BY ZERO ERROR!!!";
-  }
+  assert(r.denominator != 0);
   if (r.numerator == 0) {
     return output << 0;
   }
@@ -146,13 +146,11 @@ ostream &operator<<(ostream &output, const Rational &r) {
   return output << r.numerator << "/" << r.denominator;
 }
 
-//----------------------------------------------------------------------------
-// operator>>
-// overloaded >>: takes 2 ints as Numerator and Denominator, does no
-//    error checking, standard C casting between floats, char, etc occurs
-
+// overloaded >>: takes 2 ints as Numerator and Denominator,
+// does not do any error checking
 istream &operator>>(istream &input, Rational &r) {
   input >> r.numerator >> r.denominator;
+  assert(r.denominator != 0);
   if (r.denominator < 0) {
     r.numerator = -r.numerator;
     r.denominator = -r.denominator;
@@ -163,22 +161,21 @@ istream &operator>>(istream &input, Rational &r) {
 
 // reduce fraction to lowest terms
 void Rational::reduce() {
+  // if numerator is 0, set denominator to be always 1
+  if (numerator == 0) {
+    denominator = 1;
+    return;
+  }
   // make Numerator positive
   int n = numerator < 0 ? -numerator : numerator;
 
-  int greatestCommonCivisor = 0;
+  // greatest common divisor
+  int gcd = min(n, denominator);
 
-  // find Largest value that divides both Numerator and Denominator evenly
-  for (int loop = max(n, denominator); loop > 1; loop--) {
-    if (numerator % loop == 0 && denominator % loop == 0) {
-      greatestCommonCivisor = loop;
-      break;
-    }
+  while (n % gcd != 0 || denominator % gcd != 0) {
+    --gcd;
   }
 
-  // alter Numerator, Denominator if originally not reduced to lowest terms
-  if (greatestCommonCivisor != 0) {
-    numerator /= greatestCommonCivisor;
-    denominator /= greatestCommonCivisor;
-  }
+  numerator /= gcd;
+  denominator /= gcd;
 }

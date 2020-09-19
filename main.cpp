@@ -92,11 +92,6 @@ void test4() {
   assert(num == 2);
 
   ss.str("");
-  Rational bad(4, 0);
-  ss << bad;
-  assert(ss.str() == "DIVIDE BY ZERO ERROR!!!");
-
-  ss.str("");
   Rational whole(7, 1);
   ss << whole;
   assert(ss.str() == "7");
