@@ -37,6 +37,12 @@ public:
   // default constructor with numerator and denomintor
   Rational(int numerator, int denominator);
 
+  // accessor for numerator
+  int getNumerator() const;
+
+  // accessor for denominator
+  int getDenominator() const;
+
   // arithmetic operators
   Rational operator+(const Rational &other) const;
   Rational operator-(const Rational &other) const;

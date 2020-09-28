@@ -42,63 +42,51 @@ void test2() {
 
 // testing assignment operators
 void test3() {
-  stringstream ss;
   Rational r12(1, 2);
   Rational r23(2, 3);
   r12 += r23;
-  ss << r12;
-  assert(ss.str() == "7/6");
+  assert(r12.getNumerator() == 7 && r12.getDenominator() == 6);
 
-  ss.str("");
   r12 = Rational(1, 2);
   r12 -= r23;
-  ss << r12;
-  assert(ss.str() == "-1/6");
+  assert(r12.getNumerator() == -1 && r12.getDenominator() == 6);
 
-  ss.str("");
   r12 = Rational(1, 2);
   r12 *= r23;
-  ss << r12;
-  assert(ss.str() == "1/3");
+  assert(r12.getNumerator() == 1 && r12.getDenominator() == 3);
 
-  ss.str("");
   r12 = Rational(1, 2);
   r12 /= r23;
-  ss << r12;
-  assert(ss.str() == "3/4");
+  assert(r12.getNumerator() == 3 && r12.getDenominator() == 4);
 }
 
 // test miscellaneous
 void test4() {
-  stringstream ss;
   Rational r(-1, -2);
-  ss << r;
-  assert(ss.str() == "1/2");
+  assert(r.getNumerator() == 1 && r.getDenominator() == 2);
 
-  ss.str("");
   istringstream toRead("-20 -70");
   toRead >> r;
-  ss << r;
-  assert(ss.str() == "2/7");
+  assert(r.getNumerator() == 2 && r.getDenominator() == 7);
 
-  ss.str("");
   Rational r10(10);
   r *= r10;
-  ss << r;
-  assert(ss.str() == "20/7");
+  assert(r.getNumerator() == 20 && r.getDenominator() == 7);
 
   // same as old style casting using (int)
   int num = static_cast<int>(r);
   assert(num == 2);
 
-  ss.str("");
+  stringstream ss;
   Rational whole(7, 1);
   ss << whole;
+  assert(whole.getNumerator() == 7 && whole.getDenominator() == 1);
   assert(ss.str() == "7");
 
   ss.str("");
   Rational zero(0, 10);
   ss << zero;
+  assert(zero.getNumerator() == 0 && zero.getDenominator() == 1);
   assert(ss.str() == "0");
 }
 

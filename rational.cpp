@@ -23,6 +23,12 @@ Rational::Rational(int aNumerator, int aDenominator)
   reduce();
 }
 
+// accessor for numerator
+int Rational::getNumerator() const { return numerator; }
+
+// accessor for denominator
+int Rational::getDenominator() const { return denominator; }
+
 Rational::operator int() const { return numerator / denominator; }
 //----------------------------------------------------------------------------
 // operator+

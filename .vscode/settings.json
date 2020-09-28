@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.krb": "plaintext",
+        "iosfwd": "cpp",
+        "cassert": "cpp"
+    }
+}
