@@ -74,7 +74,7 @@ void test4() {
   assert(r.getNumerator() == 20 && r.getDenominator() == 7);
 
   // same as old style casting using (int)
-  int num = static_cast<int>(r);
+  auto num = static_cast<int>(r);
   assert(num == 2);
 
   stringstream ss;

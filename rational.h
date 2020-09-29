@@ -50,12 +50,12 @@ public:
   Rational operator/(const Rational &other) const;
 
   // boolean comparison operators
-  bool operator>(const Rational &r) const;
-  bool operator<(const Rational &r) const;
-  bool operator>=(const Rational &r) const;
-  bool operator<=(const Rational &r) const;
-  bool operator==(const Rational &r) const;
-  bool operator!=(const Rational &r) const;
+  bool operator>(const Rational &other) const;
+  bool operator<(const Rational &other) const;
+  bool operator>=(const Rational &other) const;
+  bool operator<=(const Rational &other) const;
+  bool operator==(const Rational &other) const;
+  bool operator!=(const Rational &other) const;
 
   // assignment operators
   Rational &operator+=(const Rational &other);

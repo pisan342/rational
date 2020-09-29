@@ -11,13 +11,15 @@ Rational::Rational() = default;
 Rational::Rational(int numerator) : numerator{numerator} {}
 
 // constructor with numberator and denominator
-Rational::Rational(int aNumerator, int aDenominator)
-    : numerator{aNumerator}, denominator{aDenominator} {
+Rational::Rational(int numerator, int denominator) {
   assert(denominator != 0);
   // If denominator is negative, flip both
-  if (aDenominator < 0) {
-    numerator = -aNumerator;
-    denominator = -aDenominator;
+  if (denominator < 0) {
+    this->numerator = -numerator;
+    this->denominator = -denominator;
+  } else {
+    this->numerator = numerator;
+    this->denominator = denominator;
   }
   // to lowest terms
   reduce();
