@@ -100,7 +100,7 @@ rm ./a.out 2>/dev/null
 
 g++ -std=c++11 -fsanitize=address -fno-omit-frame-pointer -g *.cpp
 # Execute program
-$EXEC_PROGRAM > /dev/null
+$EXEC_PROGRAM > /dev/null 2>/dev/null
 
 
 echo "====================================================="
@@ -131,7 +131,7 @@ fi
 
 
 # Remove the executable
-rm ./a.out* 2>/dev/null
+rm -rf ./a.out* 2>/dev/null
 
 date
 

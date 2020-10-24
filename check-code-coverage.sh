@@ -4,11 +4,13 @@
 # Basedon information from
 # https://github.com/mapbox/cpp/blob/master/docs/coverage.md
 
-PROG=$0
-EXE="./a.out-code-coverage"
 # How we want to call our executable, 
 # possibly with some command line parameters
-EXEC_PROGRAM="$EXE "
+EXEC_PROGRAM="./a.out "
+
+######################################################################
+PROG=$0
+EXE="a.out"
 PROFDATA=$EXE.profdata
 CC=clang++
 
@@ -30,7 +32,7 @@ if [ ! -f $EXE ]; then
 fi
 
 # Execute the program
-$EXEC_PROGRAM > /dev/null
+$EXEC_PROGRAM > /dev/null 2>/dev/null
 
 if [ ! -f "default.profraw" ]; then
     echo "ERROR: $PROG: Failed to create default.profraw data"
@@ -54,4 +56,4 @@ fi
 
 llvm-cov show $EXE -instr-profile=$PROFDATA
 
-rm $EXE $PROFDATA default.profraw 2>/dev/null
+rm -rf ./a.out* $EXE $PROFDATA default.profraw 2>/dev/null
